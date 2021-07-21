@@ -1,10 +1,10 @@
 public class CommandHandler {
-    public static boolean handleCommand(String userInput, Robot robot) {
+    public static void handleCommand(String userInput, Robot robot) {
         try {
             if (userInput.startsWith("PLACE")) {
                 handlePlaceCommand(userInput, robot);
-                return true;
-            } else if (robot.hasRobotInit())  {
+                return;
+            } else if (!robot.hasRobotInit())  {
                 throw new Exception("Need to place a valid place command before continuing");
             }
             Command command = Command.valueOf(userInput);
@@ -23,12 +23,9 @@ public class CommandHandler {
             }
         } catch (IllegalArgumentException ex) {
             System.out.println("Your input is not a valid input, please provide input with value PLACE/LEFT/RIGHT/MOVE/REPORT");
-            return false;
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
-            return false;
         }
-        return true;
     }
 
     /**
