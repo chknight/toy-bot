@@ -54,4 +54,32 @@ public class CommandHandlerIT {
         assertEquals(3, robot.getGridY());
         assertEquals(Direction.NORTH, robot.getCurrentDirection());
     }
+
+    @Test
+    public void testCommandHandlerWithValidExample4() {
+        // Prepare
+        List<String> commands = List.of("PLACE 1,2,EAST", "MOVE", "MOVE", "LEFT", "PLACE 3,3,SOUTH", "RIGHT", "MOVE", "REPORT");
+
+        // Action
+        commands.forEach(command -> CommandHandler.handleCommand(command, robot));
+
+        // Assert
+        assertEquals(2, robot.getGridX());
+        assertEquals(3, robot.getGridY());
+        assertEquals(Direction.WEST, robot.getCurrentDirection());
+    }
+
+    @Test
+    public void testCommandHandlerWithInvalidInitialPlace() {
+        // Prepare
+        List<String> commands = List.of("PLACE -1,2,EAST", "MOVE", "PLACE 3,3,SOUTH", "RIGHT", "MOVE", "REPORT");
+
+        // Action
+        commands.forEach(command -> CommandHandler.handleCommand(command, robot));
+
+        // Assert
+        assertEquals(2, robot.getGridX());
+        assertEquals(3, robot.getGridY());
+        assertEquals(Direction.WEST, robot.getCurrentDirection());
+    }
 }

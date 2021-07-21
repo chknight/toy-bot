@@ -78,4 +78,45 @@ public class PositionUtilsTest {
             Assertions.assertEquals(expectedResult, result);
         }
     }
+
+    @Nested
+    class TestMoveInY {
+        @ParameterizedTest
+        @CsvSource(value = {
+                "EAST,1,1",
+                "WEST,1,1"},
+                delimiter = ',')
+
+        void shouldNotMoveInXIfDirectionIsToEastOrWest(
+                Direction currentDirection, Integer currentY, Integer expectedResult) {
+            Integer result = PositionUtils.calculateGridYAfterMove(currentDirection, currentY);
+            Assertions.assertEquals(expectedResult, result);
+        }
+
+        @ParameterizedTest
+        @CsvSource(value = {
+                "NORTH,1,2",
+                "NORTH,3,4",
+                "SOUTH,1,0",
+                "SOUTH,3,2"},
+                delimiter = ',')
+
+        void shouldMoveInXIfDirectionIsToNorthAndSouthAndMoveIsValid(
+                Direction currentDirection, Integer currentY, Integer expectedResult) {
+            Integer result = PositionUtils.calculateGridYAfterMove(currentDirection, currentY);
+            Assertions.assertEquals(expectedResult, result);
+        }
+
+        @ParameterizedTest
+        @CsvSource(value = {
+                "NORTH,4,4",
+                "SOUTH,0,0"},
+                delimiter = ',')
+
+        void shouldNotMoveInXIfDirectionIsToNorthAndSouthAndMoveIsInvalid(
+                Direction currentDirection, Integer currentY, Integer expectedResult) {
+            Integer result = PositionUtils.calculateGridYAfterMove(currentDirection, currentY);
+            Assertions.assertEquals(expectedResult, result);
+        }
+    }
 }
