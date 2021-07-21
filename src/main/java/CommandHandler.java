@@ -33,15 +33,15 @@ public class CommandHandler {
 
     /**
      * Handle the place ment comment
-     * @param placeCommand
-     * @param robot
-     * @throws Exception
+     * @param placeCommand Command to place the robot
+     * @param robot Current Robot
+     * @throws Exception Exception when parsing the place command
      */
     public static void handlePlaceCommand(String placeCommand, Robot robot) throws Exception {
         String positionInfo = placeCommand.replaceFirst("PLACE ", "");
         String[] positions = positionInfo.split(",");
         if (positions.length != 3) {
-            throw new Exception("PLACE Command is in wrong format");
+            throw new Exception("PLACE Command is in wrong format, should be PLACE X,Y,F");
         }
         try {
             int gridX = Integer.parseInt(positions[0]);
@@ -53,8 +53,10 @@ public class CommandHandler {
             } else {
                 throw new Exception("The X and Y in your place command is invalid, they should be >= 0 and <= 4");
             }
+        } catch (IllegalArgumentException exception) {
+            throw new Exception("PLACE Command is in wrong format, should be PLACE X,Y,F");
         } catch (Exception ex) {
-            throw new Exception("PLACE Command is in wrong format");
+            throw ex;
         }
     }
 
