@@ -1,8 +1,25 @@
 /**
  * Generic class to calculate next direction according to command
  */
-public class DirectionUtils {
+public class PositionUtils {
     final private static int DIRECTION_SIZE = Direction.values().length;
+    // TODO The boundary value could be use as input
+    /**
+     * Max value in X Aris
+     */
+    final private static int MAX_X = 4;
+    /**
+     * Min value in X Aris
+     */
+    final private static int MIN_X = 0;
+    /**
+     * Max value in Y Aris
+     */
+    final private static int MAX_Y = 4;
+    /**
+     * Min value in Y Aris
+     */
+    final private static int MIN_Y = 0;
 
     /**
      * Handle the current direction and command and calculate the next command
@@ -25,28 +42,34 @@ public class DirectionUtils {
      * Calculate the robot move in x aris
      * @param currentDirection Current direction of robot
      * @param gridX Current Position in X aris
-     * @param minX Min value of in x aris
-     * @param maxX Max value of in x aris
      * @return Return the position in X after moving
      */
     public static Integer calculateGridXAfterMove(
-            Direction currentDirection, Integer gridX, Integer minX, Integer maxX
+            Direction currentDirection, Integer gridX
     ) {
-        return calculatePointAfterMove(currentDirection, gridX, minX, maxX, Direction.EAST, Direction.WEST);
+        return calculatePointAfterMove(currentDirection, gridX, MIN_X, MAX_X, Direction.EAST, Direction.WEST);
     }
 
     /**
      * Calculate the robot move in y aris
      * @param currentDirection Current direction of robot
      * @param gridY Current Position in y aris
-     * @param minY Min value of in y aris
-     * @param maxY Max value of in y aris
      * @return Return the position in Y after moving
      */
     public static Integer calculateGridYAfterMove(
-            Direction currentDirection, Integer gridY, Integer minY, Integer maxY
+            Direction currentDirection, Integer gridY
     ) {
-        return calculatePointAfterMove(currentDirection, gridY, minY, maxY, Direction.NORTH, Direction.SOUTH);
+        return calculatePointAfterMove(currentDirection, gridY, MIN_Y, MAX_Y, Direction.NORTH, Direction.SOUTH);
+    }
+
+    /**
+     * Check whether current point is valid
+     */
+    public static Boolean isValid(int x, int y) {
+        return x <= MAX_X
+                && x >= MIN_X
+                && y <= MAX_Y
+                && y >= MIN_Y;
     }
 
     private static Integer calculatePointAfterMove(
